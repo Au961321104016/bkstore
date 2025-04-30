@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  name      String
+  role      Role       @default(USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  cartItems CartItem[]
+  orders    Order[]
+  isActive Boolean  @default(false)
+   wishlist  Wishlist[]  // Add this field for the reverse relation to Wishlist
+}
+
+model Book {
+  id          String      @id @default(uuid())
+  title       String
+  description String?
+  price       Decimal
+  stock       Int
+  author      String
+  category    String
+  imageUrl    String?  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+  wishlist    Wishlist[]  // Add this field for the reverse relation to Wishlist
+}
+
+
+model CartItem {
+  id       String @id @default(uuid())
+  userId   String
+  bookId   String
+  quantity Int    @default(1)
+  book     Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  userId     String
+  total      Decimal
+  status     OrderStatus @default(PENDING)
+  createdAt  DateTime    @default(now())
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+  payment    Payment?
+}
+
+model OrderItem {
+  id       String  @id @default(uuid())
+  orderId  String
+  bookId   String
+  quantity Int
+  price    Decimal
+  book     Book    @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  order    Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  orderId   String        @unique
+  stripeId  String        @unique
+  amount    Decimal
+  status    PaymentStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+  order     Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+model Wishlist {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId String
+
+  @@unique([userId, bookId]) // Ensure a user cannot add the same book more than once
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}

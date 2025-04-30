@@ -1,0 +1,193 @@
+/* 🏠 Navbar Container */
+.navbar {
+  background-color: #333;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 📌 Navigation List */
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* 📌 Navigation Items */
+.navItem {
+  margin: 0 20px;
+}
+
+/* 📌 Links */
+.navLink {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navLink:hover {
+  background-color: #0070f3;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.navLink:focus {
+  outline: none;
+  box-shadow: 0 0 5px #0070f3;
+}
+
+/* 🎯 Right Side Container */
+.rightContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* 🛒 Cart Button */
+.cartButton {
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 16px;
+  border: 2px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+
+.cartButton:hover {
+  background-color: #0070f3;
+  border-color: #0070f3;
+  transform: scale(1.1);
+}
+
+/* 🔴 Cart Badge (Item Count) */
+.cartBadge {
+  background-color: red;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  animation: pop-in 0.3s ease-in-out;
+}
+
+/* 🔥 Pop-in Animation for Cart Badge */
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 🔑 Sign In Button */
+.signInButton {
+  background-color: #ff5722;
+  color: white;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.signInButton:hover {
+  background-color: #e64a19;
+  transform: scale(1.1);
+}
+
+/* 📚 Cart Details */
+.cartDetails {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  background: white;
+  color: black;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 250px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 📚 Book List */
+.cartList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ❌ Remove Button */
+.removeButton {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.removeButton:hover {
+  background: darkred;
+}
+
+/* 🎥 Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 Mobile Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navList {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cartDetails {
+    right: 10px;
+    width: 90%;
+  }
+}
