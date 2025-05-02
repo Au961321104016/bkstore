@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useCart } from "@/pages/context/cartcontext";
+import { useCart } from "@/context/cartcontext";
 import Navbar from "@/components/Navbar";
 
 const AddressPage = () => {

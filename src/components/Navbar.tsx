@@ -1,16 +1,16 @@
 import { FC, useState, useEffect } from 'react';
-import { useCart } from '@/pages/context/cartcontext'; // Assuming this is your custom hook for cart context
-import { useWishlist } from '@/context/wishlistcontext'; // Assuming this is your custom hook for wishlist context
+import { useCart } from '@/context/cartcontext';
+import { useWishlist } from '@/context/wishlistcontext';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { getUserFromToken } from '@/utils/getuserFromtoken'; // Your utility to decode JWT
+import { getUserFromToken } from '@/utils/getuserFromtoken';
 
 interface NavbarProps {
-  wishlistCount: number;
+  wishlistCount?: number; // made optional
   onOrderClick?: () => void;
 }
 
-const Navbar: FC<NavbarProps> = ({ wishlistCount, onOrderClick }) => {
+const Navbar: FC<NavbarProps> = ({ wishlistCount = 0, onOrderClick }) => {
   const router = useRouter();
   const { cartItems, removeFromCart } = useCart();
   const { wishlist } = useWishlist();

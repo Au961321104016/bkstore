@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { CartProvider } from "@/pages/context/cartcontext";
+import { CartProvider } from "@/context/cartcontext";
 import { WishlistProvider } from "@/context/wishlistcontext"; // ✅ Import WishlistProvider
 import { ThemeProvider } from "@/context/ThemeContext";
 import Footer from "@/components/footer";

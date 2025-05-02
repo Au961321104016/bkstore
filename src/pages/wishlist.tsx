@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "@/components/Navbar";
-import LoadingSpinner from "@/components/Loadingspinner";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 
 const WishlistPage = () => {

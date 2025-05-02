@@ -1,6 +1,6 @@
 'use client';
 
-import { useCart } from "@/pages/context/cartcontext";
+import { useCart } from "@/context/cartcontext";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/router";
 import { Toaster, toast } from "react-hot-toast";
@@ -28,7 +28,7 @@ const Checkout = () => {
   );
 
   useEffect(() => {
-    const userInfo = getUserFromToken(); // ✅ no arguments here
+    const userInfo = getUserFromToken();
     if (!userInfo) {
       router.push("/login");
     } else {
@@ -37,14 +37,9 @@ const Checkout = () => {
   }, [router]);
 
   const handleCheckout = async () => {
-    if (
-      !address.name ||
-      !address.email ||
-      !address.phone ||
-      !address.street ||
-      !address.city ||
-      !address.postalCode
-    ) {
+    const { name, email, phone, street, city, postalCode } = address;
+
+    if (!name || !email || !phone || !street || !city || !postalCode) {
       toast.error("Please fill out all address fields.");
       return;
     }
@@ -62,7 +57,6 @@ const Checkout = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: user.id,
-          total: totalPrice,
           orderItems: cartItems.map((item) => ({
             bookId: item.id,
             quantity: item.quantity,
@@ -92,7 +86,7 @@ const Checkout = () => {
       }, 1000);
     } catch (error: any) {
       console.error("Order failed:", error);
-      toast.error(error.message);
+      toast.error(error.message || "Something went wrong");
       setIsPlacingOrder(false);
     }
   };
@@ -111,7 +105,7 @@ const Checkout = () => {
           <p className="text-center text-lg text-gray-600">Your cart is empty.</p>
         ) : (
           <>
-            {/* Address Form */}
+            {/* Shipping Address Form */}
             <div className="bg-white p-8 rounded-2xl shadow-xl mb-10">
               <h2 className="text-2xl font-bold text-blue-600 mb-6">Shipping Address 📦</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -119,7 +113,7 @@ const Checkout = () => {
                   <input
                     key={field}
                     type="text"
-                    placeholder={field.replace(/^\w/, (c) => c.toUpperCase())}
+                    placeholder={field[0].toUpperCase() + field.slice(1)}
                     value={address[field as keyof typeof address]}
                     onChange={(e) =>
                       setAddress({ ...address, [field]: e.target.value })
@@ -132,7 +126,7 @@ const Checkout = () => {
               </div>
             </div>
 
-            {/* Cart Items */}
+            {/* Cart Summary */}
             <div className="space-y-6">
               {cartItems.map((item) => (
                 <div
@@ -170,7 +164,7 @@ const Checkout = () => {
               ))}
             </div>
 
-            {/* Checkout Summary */}
+            {/* Checkout Button */}
             <div className="mt-10 text-right">
               <p className="text-2xl font-semibold mb-4">
                 Total:{" "}

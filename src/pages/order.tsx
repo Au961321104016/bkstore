@@ -69,26 +69,26 @@ const OrderPage = () => {
         setAddress(addr);
       } catch (error) {
         console.error("Failed to parse order data:", error);
-        router.push("/order");
+        router.push("/orders");
       } finally {
         setLoading(false);
       }
     } else {
-      router.push("/order");
+      router.push("/orders");
     }
   }, [router.query]);
 
   const handlePlaceOrder = async () => {
     if (orderItems.length > 0 && address && user) {
       try {
-        const response = await fetch("/api/order", {
+        const response = await fetch("/api/orders", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
           },
           body: JSON.stringify({
             userId: user.userId,
-            total: totalAmount,
             orderItems: orderItems.map((item) => ({
               bookId: item.id,
               quantity: item.quantity,
@@ -97,10 +97,17 @@ const OrderPage = () => {
           }),
         });
 
-        const data = await response.json();
+        const text = await response.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          console.error("❌ Response from /api/orders is not JSON:", text);
+          return;
+        }
 
-        if (!response.ok) {
-          console.error("Order creation failed:", data);
+        if (!response.ok || !data.success) {
+          console.error("❌ Order creation failed:", data);
           setOrderCreated(false);
         } else {
           console.log("✅ Order created:", data);
@@ -132,7 +139,14 @@ const OrderPage = () => {
         }),
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error("❌ Response from /api/send-email is not JSON:", text);
+        return;
+      }
 
       if (!response.ok) {
         console.error("❌ Email send failed:", data);

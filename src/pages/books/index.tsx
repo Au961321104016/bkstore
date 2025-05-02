@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useCart } from "@/pages/context/cartcontext";
+import { useCart } from "@/context/cartcontext";
 import { useWishlist } from "@/context/wishlistcontext";
 import Navbar from "@/components/Navbar";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";  // Outline Heart
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";  // Solid Heart
-import LoadingSpinner from "@/components/Loadingspinner";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type Book = {
   id: string;

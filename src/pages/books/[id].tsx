@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "@/components/Navbar";
-import { useCart } from "@/pages/context/cartcontext";
+import { useCart } from "@/context/cartcontext";
 import { Toaster, toast } from "react-hot-toast";
 import { HeartIcon } from "@heroicons/react/24/solid"; // Filled heart icon
 import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline"; // Outline heart icon
