@@ -51,6 +51,10 @@ const Navbar: FC<NavbarProps> = ({ wishlistCount = 0, onOrderClick }) => {
         <li className="font-medium text-xl">
           <Link href="/order" className="text-gray-700 hover:text-gray-900">Order</Link>
         </li>
+        <li className="font-medium text-xl">
+          <Link href="/contact" className="text-gray-700 hover:text-gray-900">Contact</Link>
+        </li>
+        
       </ul>
 
       <div className="flex items-center gap-6 relative">
